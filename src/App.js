@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Task1 from "./components/Task1";
+import Card from "./components/Card";
+import ProductList from "./components/ProductList";
 
-function App() {
+const App = () => {
+  const [show, setShow] = useState(true);
+  const [products, setProducts] = useState([]);
+
+  function hideButton() {
+    setShow(!show);
+  }
+
+  function createProduct(newObj) {
+    let newProducts = [...products];
+    newProducts.push(newObj);
+    setProducts(newProducts);
+  }
+
+  function deleteProduct(id) {
+    let newProducts = [...products];
+    newProducts = newProducts.filter(item => item.id !== id);
+    setProducts(newProducts);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Task1 hideButton={hideButton} show={show} />
+      <Card createProduct={createProduct} />
+      <ProductList deleteProduct={deleteProduct} products={products} />
     </div>
   );
-}
+};
 
 export default App;
